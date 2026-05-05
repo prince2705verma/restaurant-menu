@@ -212,7 +212,8 @@ export class AdminDashboardComponent implements OnInit {
   async openQrTab(): Promise<void> {
     this.activeTab = 'qr';
     const base = document.querySelector('base')?.getAttribute('href') ?? '/';
-    this.menuUrl = window.location.origin + base + 'menu?restaurantId=' + this.restaurant.id;
+    const baseUrl = base.startsWith('http') ? base : window.location.origin + base;
+    this.menuUrl = baseUrl + 'menu?restaurantId=' + this.restaurant.id;
     this.qrDataUrl = await QRCode.toDataURL(this.menuUrl, {
       width: 300,
       margin: 2,
