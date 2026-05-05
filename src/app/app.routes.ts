@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/menu?restaurantId=royal-kitchen', pathMatch: 'full' },
+  { path: '', redirectTo: '/admin/login', pathMatch: 'full' },
   {
     path: 'menu',
     loadComponent: () => import('./pages/menu/menu.component').then(m => m.MenuComponent),
@@ -16,5 +16,5 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () => import('./pages/admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent),
   },
-  { path: '**', redirectTo: '/menu?restaurantId=royal-kitchen' },
+  { path: '**', redirectTo: '/admin/login' },
 ];
