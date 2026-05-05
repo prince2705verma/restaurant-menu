@@ -257,6 +257,10 @@ export class AdminDashboardComponent implements OnInit {
     return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  isImageUrl(val: string): boolean {
+    return /^https?:\/\//i.test(val);
+  }
+
   // ─── Navigation ─────────────────────────────────────────────
   previewMenu(): void {
     this.router.navigate(['/menu'], { queryParams: { restaurantId: this.restaurant.id } });

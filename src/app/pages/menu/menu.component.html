@@ -9,7 +9,13 @@
   <header class="header">
     <div class="header-content">
       <div class="restaurant-brand">
-        <span class="brand-icon">{{ restaurant.logo }}</span>
+        <span class="brand-icon">
+          @if (isImageUrl(restaurant.logo)) {
+            <img [src]="restaurant.logo" alt="Logo" class="brand-logo-img" />
+          } @else {
+            {{ restaurant.logo }}
+          }
+        </span>
         <div>
           <h1 class="restaurant-name">{{ restaurant.name }}</h1>
           <p class="restaurant-tagline">{{ restaurant.tagline }}</p>

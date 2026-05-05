@@ -1,7 +1,13 @@
 <!-- Top bar -->
 <header class="dash-header">
   <div class="dash-brand">
-    <span class="dash-logo">{{ restaurant.logo }}</span>
+    <span class="dash-logo">
+      @if (isImageUrl(restaurant.logo)) {
+        <img [src]="restaurant.logo" alt="Logo" class="header-logo-img" />
+      } @else {
+        {{ restaurant.logo }}
+      }
+    </span>
     <div>
       <h1 class="dash-name">{{ restaurant.name }}</h1>
       <span class="dash-role">Owner Dashboard</span>
@@ -45,7 +51,13 @@
       <div class="form-group">
         <label>Logo (emoji or image URL)</label>
         <div class="logo-row">
-          <span class="logo-preview">{{ infoForm.logo || '🍽️' }}</span>
+          <span class="logo-preview">
+            @if (isImageUrl(infoForm.logo)) {
+              <img [src]="infoForm.logo" alt="Logo preview" class="logo-preview-img" />
+            } @else {
+              {{ infoForm.logo || '🍽️' }}
+            }
+          </span>
           <input type="text" [(ngModel)]="infoForm.logo" placeholder="🍽️ or https://..." class="logo-input" />
         </div>
         <p class="field-hint">Use an emoji for quick setup, or paste an image URL.</p>
@@ -299,7 +311,11 @@
       @if (qrDataUrl) {
         <div class="qr-card">
           <div class="qr-restaurant-label">
-            <span>{{ restaurant.logo }}</span>
+            @if (isImageUrl(restaurant.logo)) {
+              <img [src]="restaurant.logo" alt="Logo" class="qr-logo-img" />
+            } @else {
+              <span>{{ restaurant.logo }}</span>
+            }
             <span>{{ restaurant.name }}</span>
           </div>
           <img class="qr-image" [src]="qrDataUrl" alt="Menu QR Code" />

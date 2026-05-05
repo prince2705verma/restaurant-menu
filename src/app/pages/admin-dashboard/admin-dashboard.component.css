@@ -17,7 +17,7 @@
 .dash-name    { font-size: 1.1rem; font-weight: 700; color: var(--gold-light); line-height: 1.2; }
 .dash-role    { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.06em; }
 
-.dash-actions { display: flex; gap: 0.5rem; }
+.dash-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
 
 /* ── Buttons ─────────────────────────────────────────── */
 .btn-ghost {
@@ -92,8 +92,11 @@
 .field-hint { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.15rem; }
 
 .logo-row { display: flex; align-items: center; gap: 0.75rem; }
-.logo-preview { font-size: 2.2rem; line-height: 1; }
-.logo-input { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text-main); font-size: 0.93rem; padding: 0.6rem 0.85rem; outline: none; transition: border-color 0.2s; }
+.logo-preview { font-size: 2.2rem; line-height: 1; width: 2.75rem; height: 2.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.logo-preview-img { width: 2.75rem; height: 2.75rem; object-fit: cover; border-radius: 8px; }
+.header-logo-img { width: 2rem; height: 2rem; object-fit: cover; border-radius: 6px; }
+.qr-logo-img { width: 1.6rem; height: 1.6rem; object-fit: cover; border-radius: 4px; }
+.logo-input { flex: 1; min-width: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text-main); font-size: 0.93rem; padding: 0.6rem 0.85rem; outline: none; transition: border-color 0.2s; }
 .logo-input:focus { border-color: var(--gold); }
 
 .form-actions { margin-top: 0.5rem; }

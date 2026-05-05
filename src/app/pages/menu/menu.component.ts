@@ -72,6 +72,10 @@ export class MenuComponent implements OnInit {
   setFilter(v: 'all' | 'veg' | 'nonveg'): void { this.filterVeg = v; }
   clearSearch(): void { this.searchQuery = ''; }
 
+  isImageUrl(val: string): boolean {
+    return /^https?:\/\//i.test(val);
+  }
+
   goToAdmin(): void {
     if (this.auth.isLoggedIn && this.auth.restaurantId === this.restaurant?.id) {
       this.router.navigate(['/admin/dashboard'], { queryParams: { restaurantId: this.restaurant?.id } });
