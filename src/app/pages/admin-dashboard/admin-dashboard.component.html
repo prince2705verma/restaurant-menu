@@ -18,6 +18,7 @@
   <button class="d-tab" [class.active]="activeTab==='info'"  (click)="activeTab='info'">📋 Info</button>
   <button class="d-tab" [class.active]="activeTab==='menu'"  (click)="activeTab='menu'">🍽️ Menu</button>
   <button class="d-tab" [class.active]="activeTab==='theme'" (click)="activeTab='theme'">🎨 Theme</button>
+  <button class="d-tab" [class.active]="activeTab==='qr'"    (click)="openQrTab()">📱 QR Code</button>
 </nav>
 
 @if (savedMsg) {
@@ -285,6 +286,36 @@
       <div class="form-actions">
         <button class="btn-primary" (click)="saveMenu()">💾 Save Menu</button>
       </div>
+    </section>
+  }
+
+
+  <!-- ══════════════════ QR CODE TAB ══════════════════ -->
+  @if (activeTab === 'qr') {
+    <section class="tab-section qr-section">
+      <h2 class="section-heading">Table QR Code</h2>
+      <p class="qr-hint">Print this QR code and place it on your tables. Customers scan it to open your menu instantly — no app needed.</p>
+
+      @if (qrDataUrl) {
+        <div class="qr-card">
+          <div class="qr-restaurant-label">
+            <span>{{ restaurant.logo }}</span>
+            <span>{{ restaurant.name }}</span>
+          </div>
+          <img class="qr-image" [src]="qrDataUrl" alt="Menu QR Code" />
+          <p class="qr-scan-label">Scan to view menu</p>
+        </div>
+
+        <div class="qr-url-box">
+          <span class="qr-url-label">Menu URL</span>
+          <span class="qr-url-text">{{ menuUrl }}</span>
+        </div>
+
+        <div class="qr-actions">
+          <button class="btn-primary" (click)="downloadQr()">⬇ Download PNG</button>
+          <button class="btn-ghost"   (click)="printQr()">🖨 Print</button>
+        </div>
+      }
     </section>
   }
 

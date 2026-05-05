@@ -7,6 +7,7 @@ import { MenuItem, MenuSection } from '../../menu.data';
 import { AuthService } from '../../services/auth.service';
 import { RestaurantService } from '../../services/restaurant.service';
 import { ThemeService } from '../../services/theme.service';
+import QRCode from 'qrcode';
 
 interface ItemDraft {
   name: string;
@@ -25,8 +26,10 @@ interface ItemDraft {
 })
 export class AdminDashboardComponent implements OnInit {
   restaurant!: Restaurant;
-  activeTab: 'info' | 'menu' | 'theme' = 'info';
+  activeTab: 'info' | 'menu' | 'theme' | 'qr' = 'info';
   savedMsg = '';
+  qrDataUrl = '';
+  menuUrl = '';
 
   // ── Info tab
   infoForm = { name: '', tagline: '', logo: '' };
@@ -203,6 +206,54 @@ export class AdminDashboardComponent implements OnInit {
 
   isAddingTo(sectionIdx: number): boolean {
     return this.editTarget?.sectionIdx === sectionIdx && this.editTarget?.itemIdx === null;
+  }
+
+  // ─── QR Code tab ────────────────────────────────────────────
+  async openQrTab(): Promise<void> {
+    this.activeTab = 'qr';
+    const base = document.querySelector('base')?.getAttribute('href') ?? '/';
+    this.menuUrl = window.location.origin + base + 'menu?restaurantId=' + this.restaurant.id;
+    this.qrDataUrl = await QRCode.toDataURL(this.menuUrl, {
+      width: 300,
+      margin: 2,
+      color: { dark: '#000000', light: '#ffffff' },
+    });
+  }
+
+  downloadQr(): void {
+    const a = document.createElement('a');
+    a.href = this.qrDataUrl;
+    a.download = this.restaurant.name.replace(/\s+/g, '-') + '-menu-qr.png';
+    a.click();
+  }
+
+  printQr(): void {
+    const win = window.open('', '_blank');
+    if (!win) return;
+    const name = this.escapeHtml(this.restaurant.name);
+    const logo = this.escapeHtml(this.restaurant.logo);
+    const url  = this.escapeHtml(this.menuUrl);
+    win.document.write(`<!DOCTYPE html><html><head>
+      <title>${name} - Menu QR Code</title>
+      <style>
+        body{font-family:sans-serif;text-align:center;padding:48px;color:#111}
+        h1{margin:0 0 0.15rem}
+        p{color:#666;margin:0 0 2rem;font-size:0.95rem}
+        img{width:280px;height:280px;display:block;margin:0 auto}
+        .url{font-size:0.7rem;color:#aaa;margin-top:1.25rem;word-break:break-all}
+      </style>
+    </head><body>
+      <h1>${logo} ${name}</h1>
+      <p>Scan to view our menu</p>
+      <img src="${this.qrDataUrl}" alt="Menu QR Code"/>
+      <div class="url">${url}</div>
+      <script>window.onload=()=>window.print();<\/script>
+    </body></html>`);
+    win.document.close();
+  }
+
+  private escapeHtml(s: string): string {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
   // ─── Navigation ─────────────────────────────────────────────
