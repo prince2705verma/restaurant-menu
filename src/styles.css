@@ -1,0 +1,22 @@
+/* Global CSS variables — overridden at runtime by ThemeService */
+:root {
+  --gold:       #c9962b;
+  --gold-light: #f0c96a;
+  --dark:       #1a1209;
+  --dark-card:  #231a08;
+  --surface:    #2c2010;
+  --border:     #3d2e10;
+  --text-main:  #f5e8c8;
+  --text-muted: #a08850;
+}
+
+html, body {
+  margin: 0; padding: 0;
+  background: var(--dark);
+  color: var(--text-main);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+*, *::before, *::after { box-sizing: border-box; }

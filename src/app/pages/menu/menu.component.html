@@ -1,0 +1,119 @@
+@if (notFound) {
+  <div class="not-found">
+    <span>🍽️</span>
+    <h2>Restaurant not found</h2>
+    <p>Check the URL and try again.</p>
+  </div>
+} @else if (restaurant) {
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="restaurant-brand">
+        <span class="brand-icon">{{ restaurant.logo }}</span>
+        <div>
+          <h1 class="restaurant-name">{{ restaurant.name }}</h1>
+          <p class="restaurant-tagline">{{ restaurant.tagline }}</p>
+        </div>
+      </div>
+      <button class="admin-btn" (click)="goToAdmin()" title="Owner Login">
+        ⚙️ <span class="admin-btn-label">Manage</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Search & Filter -->
+  <div class="search-bar sticky-bar">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" placeholder="Search dishes..."
+        [(ngModel)]="searchQuery" />
+      @if (searchQuery) {
+        <button class="clear-btn" (click)="clearSearch()">✕</button>
+      }
+    </div>
+    <div class="filter-pills">
+      <button class="pill" [class.active]="filterVeg==='all'"    (click)="setFilter('all')">All</button>
+      <button class="pill" [class.active]="filterVeg==='veg'"    (click)="setFilter('veg')">
+        <span class="dot dot-veg"></span> Veg
+      </button>
+      <button class="pill" [class.active]="filterVeg==='nonveg'" (click)="setFilter('nonveg')">
+        <span class="dot dot-nonveg"></span> Non-Veg
+      </button>
+    </div>
+  </div>
+
+  <!-- Section Tabs -->
+  @if (!isSearching) {
+    <nav class="section-tabs sticky-bar">
+      <div class="tabs-scroll">
+        @for (section of restaurant.sections; track section.name) {
+          <button class="tab-btn" [class.active]="activeSection === section.name"
+            (click)="scrollToSection(section.name)">
+            <span class="tab-icon">{{ section.icon }}</span>
+            <span class="tab-label">{{ section.name }}</span>
+          </button>
+        }
+      </div>
+    </nav>
+  }
+
+  <!-- Menu -->
+  <main class="menu-content">
+    @if (filteredSections.length === 0) {
+      <div class="empty-state">
+        <span class="empty-icon">🍽️</span>
+        <p>No dishes found. Try a different search.</p>
+      </div>
+    }
+
+    @for (section of filteredSections; track section.name) {
+      <section class="menu-section" [id]="'section-' + section.name">
+        <div class="section-header">
+          <span class="section-icon">{{ section.icon }}</span>
+          <h2 class="section-title">{{ section.name }}</h2>
+          <span class="section-count">{{ section.items.length }} items</span>
+        </div>
+
+        <div class="price-legend">
+          <span class="legend-half">HALF</span>
+          <span class="legend-full">FULL</span>
+        </div>
+
+        <ul class="item-list">
+          @for (item of section.items; track item.name) {
+            <li class="item-card">
+              <div class="item-left">
+                <span class="veg-indicator" [class.nonveg]="!item.isVeg">
+                  <span class="veg-dot"></span>
+                </span>
+                <div class="item-info">
+                  <span class="item-name">{{ item.name }}</span>
+                  @if (item.popular) {
+                    <span class="popular-badge">⭐ Popular</span>
+                  }
+                </div>
+              </div>
+              <div class="item-prices">
+                <div class="price-cell half-price">
+                  @if (item.half) {
+                    <span class="rupee">₹</span><span class="amount">{{ item.half }}</span>
+                  } @else {
+                    <span class="price-na">—</span>
+                  }
+                </div>
+                <div class="price-cell full-price">
+                  <span class="rupee">₹</span><span class="amount">{{ item.full }}</span>
+                </div>
+              </div>
+            </li>
+          }
+        </ul>
+      </section>
+    }
+  </main>
+
+  <footer class="footer">
+    <p>All prices are inclusive of taxes &nbsp;|&nbsp; Subject to availability</p>
+    <p class="footer-brand">{{ restaurant.name }}</p>
+  </footer>
+}

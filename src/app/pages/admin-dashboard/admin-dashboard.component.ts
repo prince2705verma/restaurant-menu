@@ -1,0 +1,217 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Restaurant, ThemeConfig, THEME_PRESETS } from '../../restaurants.data';
+import { MenuItem, MenuSection } from '../../menu.data';
+import { AuthService } from '../../services/auth.service';
+import { RestaurantService } from '../../services/restaurant.service';
+import { ThemeService } from '../../services/theme.service';
+
+interface ItemDraft {
+  name: string;
+  half: number | null;
+  full: number | null;
+  isVeg: boolean;
+  popular: boolean;
+}
+
+@Component({
+  selector: 'app-admin-dashboard',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './admin-dashboard.component.html',
+  styleUrl: './admin-dashboard.component.css',
+})
+export class AdminDashboardComponent implements OnInit {
+  restaurant!: Restaurant;
+  activeTab: 'info' | 'menu' | 'theme' = 'info';
+  savedMsg = '';
+
+  // ── Info tab
+  infoForm = { name: '', tagline: '', logo: '' };
+
+  // ── Theme tab
+  themeForm!: ThemeConfig;
+  presetNames = Object.keys(THEME_PRESETS);
+
+  // ── Menu tab
+  expandedSections = new Set<number>([0]);
+  editTarget: { sectionIdx: number; itemIdx: number | null } | null = null;
+  itemDraft: ItemDraft = this.emptyDraft();
+  addingSection = false;
+  newSectionName = '';
+  newSectionIcon = '🍽️';
+  editingSectionIdx: number | null = null;
+  sectionNameDraft = '';
+
+  constructor(
+    private auth: AuthService,
+    private restaurantService: RestaurantService,
+    private themeService: ThemeService,
+    private router: Router,
+  ) {}
+
+  ngOnInit(): void {
+    const id = this.auth.restaurantId;
+    if (!id) { this.router.navigate(['/admin/login']); return; }
+    const data = this.restaurantService.getRestaurant(id);
+    if (!data) { this.router.navigate(['/admin/login']); return; }
+    this.restaurant = JSON.parse(JSON.stringify(data));
+    this.syncInfoForm();
+    this.themeForm = { ...this.restaurant.theme };
+    this.themeService.apply(this.restaurant.theme);
+  }
+
+  private syncInfoForm(): void {
+    this.infoForm = {
+      name: this.restaurant.name,
+      tagline: this.restaurant.tagline,
+      logo: this.restaurant.logo,
+    };
+  }
+
+  private emptyDraft(): ItemDraft {
+    return { name: '', half: null, full: null, isVeg: true, popular: false };
+  }
+
+  private showSaved(msg = 'Saved!'): void {
+    this.savedMsg = msg;
+    setTimeout(() => (this.savedMsg = ''), 2500);
+  }
+
+  // ─── Info tab ──────────────────────────────────────────────
+  saveInfo(): void {
+    if (!this.infoForm.name.trim()) return;
+    this.restaurant.name = this.infoForm.name.trim();
+    this.restaurant.tagline = this.infoForm.tagline.trim();
+    this.restaurant.logo = this.infoForm.logo.trim() || '🍽️';
+    this.restaurantService.saveRestaurant(this.restaurant);
+    this.showSaved('Restaurant info saved!');
+  }
+
+  // ─── Theme tab ─────────────────────────────────────────────
+  applyPreset(name: string): void {
+    this.themeForm = { ...THEME_PRESETS[name] };
+    this.themeService.apply(this.themeForm);
+  }
+
+  onThemeChange(): void {
+    this.themeService.apply(this.themeForm);
+  }
+
+  saveTheme(): void {
+    this.restaurant.theme = { ...this.themeForm };
+    this.restaurantService.saveRestaurant(this.restaurant);
+    this.showSaved('Theme saved!');
+  }
+
+  // ─── Menu tab – section controls ───────────────────────────
+  toggleSection(idx: number): void {
+    this.expandedSections.has(idx) ? this.expandedSections.delete(idx) : this.expandedSections.add(idx);
+  }
+
+  startEditSectionName(idx: number): void {
+    this.editingSectionIdx = idx;
+    this.sectionNameDraft = this.restaurant.sections[idx].name;
+  }
+
+  saveSectionName(idx: number): void {
+    if (this.sectionNameDraft.trim()) {
+      this.restaurant.sections[idx].name = this.sectionNameDraft.trim();
+    }
+    this.editingSectionIdx = null;
+  }
+
+  deleteSection(idx: number): void {
+    if (!confirm(`Delete section "${this.restaurant.sections[idx].name}" and all its items?`)) return;
+    this.restaurant.sections.splice(idx, 1);
+    this.editTarget = null;
+  }
+
+  addSection(): void {
+    if (!this.newSectionName.trim()) return;
+    this.restaurant.sections.push({
+      name: this.newSectionName.trim().toUpperCase(),
+      icon: this.newSectionIcon || '🍽️',
+      items: [],
+    });
+    this.expandedSections.add(this.restaurant.sections.length - 1);
+    this.newSectionName = '';
+    this.newSectionIcon = '🍽️';
+    this.addingSection = false;
+  }
+
+  saveMenu(): void {
+    this.editTarget = null;
+    this.restaurantService.saveRestaurant(this.restaurant);
+    this.showSaved('Menu saved!');
+  }
+
+  // ─── Menu tab – item controls ───────────────────────────────
+  startAddItem(sectionIdx: number): void {
+    this.editTarget = { sectionIdx, itemIdx: null };
+    this.itemDraft = this.emptyDraft();
+  }
+
+  startEditItem(sectionIdx: number, itemIdx: number): void {
+    const item = this.restaurant.sections[sectionIdx].items[itemIdx];
+    this.editTarget = { sectionIdx, itemIdx };
+    this.itemDraft = {
+      name: item.name,
+      half: item.half ?? null,
+      full: item.full,
+      isVeg: item.isVeg ?? true,
+      popular: item.popular ?? false,
+    };
+  }
+
+  cancelEdit(): void { this.editTarget = null; }
+
+  commitItem(): void {
+    if (!this.editTarget) return;
+    const { sectionIdx, itemIdx } = this.editTarget;
+    if (!this.itemDraft.name.trim() || this.itemDraft.full === null) return;
+
+    const item: MenuItem = {
+      name: this.itemDraft.name.trim(),
+      full: this.itemDraft.full,
+      ...(this.itemDraft.half ? { half: this.itemDraft.half } : {}),
+      isVeg: this.itemDraft.isVeg,
+      ...(this.itemDraft.popular ? { popular: true } : {}),
+    };
+
+    const items = this.restaurant.sections[sectionIdx].items;
+    if (itemIdx === null) {
+      items.push(item);
+    } else {
+      items[itemIdx] = item;
+    }
+    this.editTarget = null;
+  }
+
+  deleteItem(sectionIdx: number, itemIdx: number): void {
+    this.restaurant.sections[sectionIdx].items.splice(itemIdx, 1);
+    if (this.editTarget?.sectionIdx === sectionIdx && this.editTarget.itemIdx === itemIdx) {
+      this.editTarget = null;
+    }
+  }
+
+  isEditing(sectionIdx: number, itemIdx: number): boolean {
+    return this.editTarget?.sectionIdx === sectionIdx && this.editTarget?.itemIdx === itemIdx;
+  }
+
+  isAddingTo(sectionIdx: number): boolean {
+    return this.editTarget?.sectionIdx === sectionIdx && this.editTarget?.itemIdx === null;
+  }
+
+  // ─── Navigation ─────────────────────────────────────────────
+  previewMenu(): void {
+    this.router.navigate(['/menu'], { queryParams: { restaurantId: this.restaurant.id } });
+  }
+
+  logout(): void {
+    this.auth.logout();
+    this.router.navigate(['/admin/login'], { queryParams: { restaurantId: this.restaurant.id } });
+  }
+}

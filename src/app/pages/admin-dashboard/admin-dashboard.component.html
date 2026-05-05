@@ -1,0 +1,291 @@
+<!-- Top bar -->
+<header class="dash-header">
+  <div class="dash-brand">
+    <span class="dash-logo">{{ restaurant.logo }}</span>
+    <div>
+      <h1 class="dash-name">{{ restaurant.name }}</h1>
+      <span class="dash-role">Owner Dashboard</span>
+    </div>
+  </div>
+  <div class="dash-actions">
+    <button class="btn-ghost" (click)="previewMenu()">👁 Preview</button>
+    <button class="btn-ghost danger" (click)="logout()">Logout</button>
+  </div>
+</header>
+
+<!-- Tab nav -->
+<nav class="dash-tabs">
+  <button class="d-tab" [class.active]="activeTab==='info'"  (click)="activeTab='info'">📋 Info</button>
+  <button class="d-tab" [class.active]="activeTab==='menu'"  (click)="activeTab='menu'">🍽️ Menu</button>
+  <button class="d-tab" [class.active]="activeTab==='theme'" (click)="activeTab='theme'">🎨 Theme</button>
+</nav>
+
+@if (savedMsg) {
+  <div class="saved-toast">✅ {{ savedMsg }}</div>
+}
+
+<main class="dash-content">
+
+  <!-- ══════════════════ INFO TAB ══════════════════ -->
+  @if (activeTab === 'info') {
+    <section class="tab-section">
+      <h2 class="section-heading">Restaurant Information</h2>
+
+      <div class="form-group">
+        <label>Restaurant Name</label>
+        <input type="text" [(ngModel)]="infoForm.name" placeholder="e.g. The Royal Kitchen" />
+      </div>
+
+      <div class="form-group">
+        <label>Tagline</label>
+        <input type="text" [(ngModel)]="infoForm.tagline" placeholder="e.g. Authentic Flavours, Royal Experience" />
+      </div>
+
+      <div class="form-group">
+        <label>Logo (emoji or image URL)</label>
+        <div class="logo-row">
+          <span class="logo-preview">{{ infoForm.logo || '🍽️' }}</span>
+          <input type="text" [(ngModel)]="infoForm.logo" placeholder="🍽️ or https://..." class="logo-input" />
+        </div>
+        <p class="field-hint">Use an emoji for quick setup, or paste an image URL.</p>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-primary" (click)="saveInfo()">Save Info</button>
+      </div>
+    </section>
+  }
+
+  <!-- ══════════════════ THEME TAB ══════════════════ -->
+  @if (activeTab === 'theme') {
+    <section class="tab-section">
+      <h2 class="section-heading">Colour Theme</h2>
+
+      <div class="preset-row">
+        @for (name of presetNames; track name) {
+          <button class="preset-btn" (click)="applyPreset(name)">{{ name }}</button>
+        }
+      </div>
+
+      <div class="color-grid">
+        <div class="color-field">
+          <label>Accent (Gold)</label>
+          <div class="color-input-row">
+            <input type="color" [(ngModel)]="themeForm.gold"      (ngModelChange)="onThemeChange()" />
+            <input type="text"  [(ngModel)]="themeForm.gold"      (ngModelChange)="onThemeChange()" class="hex-input" />
+          </div>
+        </div>
+        <div class="color-field">
+          <label>Accent Light</label>
+          <div class="color-input-row">
+            <input type="color" [(ngModel)]="themeForm.goldLight" (ngModelChange)="onThemeChange()" />
+            <input type="text"  [(ngModel)]="themeForm.goldLight" (ngModelChange)="onThemeChange()" class="hex-input" />
+          </div>
+        </div>
+        <div class="color-field">
+          <label>Background</label>
+          <div class="color-input-row">
+            <input type="color" [(ngModel)]="themeForm.dark"      (ngModelChange)="onThemeChange()" />
+            <input type="text"  [(ngModel)]="themeForm.dark"      (ngModelChange)="onThemeChange()" class="hex-input" />
+          </div>
+        </div>
+        <div class="color-field">
+          <label>Card Background</label>
+          <div class="color-input-row">
+            <input type="color" [(ngModel)]="themeForm.darkCard"  (ngModelChange)="onThemeChange()" />
+            <input type="text"  [(ngModel)]="themeForm.darkCard"  (ngModelChange)="onThemeChange()" class="hex-input" />
+          </div>
+        </div>
+        <div class="color-field">
+          <label>Surface</label>
+          <div class="color-input-row">
+            <input type="color" [(ngModel)]="themeForm.surface"   (ngModelChange)="onThemeChange()" />
+            <input type="text"  [(ngModel)]="themeForm.surface"   (ngModelChange)="onThemeChange()" class="hex-input" />
+          </div>
+        </div>
+        <div class="color-field">
+          <label>Border</label>
+          <div class="color-input-row">
+            <input type="color" [(ngModel)]="themeForm.border"    (ngModelChange)="onThemeChange()" />
+            <input type="text"  [(ngModel)]="themeForm.border"    (ngModelChange)="onThemeChange()" class="hex-input" />
+          </div>
+        </div>
+        <div class="color-field">
+          <label>Text Main</label>
+          <div class="color-input-row">
+            <input type="color" [(ngModel)]="themeForm.textMain"  (ngModelChange)="onThemeChange()" />
+            <input type="text"  [(ngModel)]="themeForm.textMain"  (ngModelChange)="onThemeChange()" class="hex-input" />
+          </div>
+        </div>
+        <div class="color-field">
+          <label>Text Muted</label>
+          <div class="color-input-row">
+            <input type="color" [(ngModel)]="themeForm.textMuted" (ngModelChange)="onThemeChange()" />
+            <input type="text"  [(ngModel)]="themeForm.textMuted" (ngModelChange)="onThemeChange()" class="hex-input" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Live preview -->
+      <div class="theme-preview">
+        <p class="preview-label">Live Preview</p>
+        <div class="preview-card">
+          <div class="preview-header">
+            <span>{{ restaurant.logo }}</span>
+            <span class="preview-name">{{ restaurant.name }}</span>
+          </div>
+          <div class="preview-item">
+            <span class="preview-item-name">Sample Dish</span>
+            <span class="preview-price">₹199</span>
+          </div>
+          <div class="preview-item">
+            <span class="preview-item-name">Another Item</span>
+            <span class="preview-price">₹349</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-primary" (click)="saveTheme()">Save Theme</button>
+      </div>
+    </section>
+  }
+
+  <!-- ══════════════════ MENU TAB ══════════════════ -->
+  @if (activeTab === 'menu') {
+    <section class="tab-section">
+      <div class="menu-tab-header">
+        <h2 class="section-heading">Menu Editor</h2>
+        <button class="btn-primary small" (click)="saveMenu()">💾 Save Menu</button>
+      </div>
+
+      @for (section of restaurant.sections; track section.name; let si = $index) {
+        <div class="section-card">
+          <!-- Section header -->
+          <div class="section-card-header" (click)="toggleSection(si)">
+            <div class="section-card-title">
+              @if (editingSectionIdx === si) {
+                <input class="section-name-input" [(ngModel)]="sectionNameDraft"
+                  (click)="$event.stopPropagation()"
+                  (keydown.enter)="saveSectionName(si)"
+                  (blur)="saveSectionName(si)" />
+              } @else {
+                <span class="sec-icon">{{ section.icon }}</span>
+                <span class="sec-name">{{ section.name }}</span>
+                <span class="sec-count">{{ section.items.length }}</span>
+              }
+            </div>
+            <div class="section-card-actions" (click)="$event.stopPropagation()">
+              <button class="icon-btn" title="Rename" (click)="startEditSectionName(si)">✏️</button>
+              <button class="icon-btn danger" title="Delete section" (click)="deleteSection(si)">🗑️</button>
+              <span class="chevron" [class.open]="expandedSections.has(si)">›</span>
+            </div>
+          </div>
+
+          <!-- Section items -->
+          @if (expandedSections.has(si)) {
+            <div class="section-card-body">
+              <!-- Column labels -->
+              <div class="item-row header-row">
+                <span class="col-name">Item Name</span>
+                <span class="col-half">Half ₹</span>
+                <span class="col-full">Full ₹</span>
+                <span class="col-tags">Tags</span>
+                <span class="col-actions"></span>
+              </div>
+
+              @for (item of section.items; track item.name; let ii = $index) {
+                @if (isEditing(si, ii)) {
+                  <!-- Edit row -->
+                  <div class="item-form-row">
+                    <input class="f-name" type="text" [(ngModel)]="itemDraft.name" placeholder="Dish name" />
+                    <input class="f-price" type="number" [(ngModel)]="itemDraft.half" placeholder="Half" min="0" />
+                    <input class="f-price" type="number" [(ngModel)]="itemDraft.full" placeholder="Full *" min="0" />
+                    <div class="f-tags">
+                      <label class="toggle-label" title="Veg">
+                        <input type="checkbox" [(ngModel)]="itemDraft.isVeg" />
+                        <span [style.color]="itemDraft.isVeg ? '#22a722' : '#c0392b'">
+                          {{ itemDraft.isVeg ? '🟢 Veg' : '🔴 Non-Veg' }}
+                        </span>
+                      </label>
+                      <label class="toggle-label" title="Popular">
+                        <input type="checkbox" [(ngModel)]="itemDraft.popular" />
+                        <span>⭐</span>
+                      </label>
+                    </div>
+                    <div class="f-actions">
+                      <button class="btn-save-item" (click)="commitItem()">✓</button>
+                      <button class="btn-cancel-item" (click)="cancelEdit()">✕</button>
+                    </div>
+                  </div>
+                } @else {
+                  <!-- Display row -->
+                  <div class="item-row" [class.editing-other]="editTarget !== null && !isEditing(si, ii)">
+                    <span class="col-name">
+                      <span class="veg-dot-sm" [class.nonveg]="!item.isVeg"></span>
+                      {{ item.name }}
+                    </span>
+                    <span class="col-half">{{ item.half ?? '—' }}</span>
+                    <span class="col-full">{{ item.full }}</span>
+                    <span class="col-tags">
+                      @if (item.popular) { <span class="badge">⭐</span> }
+                    </span>
+                    <span class="col-actions">
+                      <button class="icon-btn" (click)="startEditItem(si, ii)">✏️</button>
+                      <button class="icon-btn danger" (click)="deleteItem(si, ii)">🗑️</button>
+                    </span>
+                  </div>
+                }
+              }
+
+              <!-- Add item form -->
+              @if (isAddingTo(si)) {
+                <div class="item-form-row add-row">
+                  <input class="f-name" type="text" [(ngModel)]="itemDraft.name" placeholder="Dish name *" />
+                  <input class="f-price" type="number" [(ngModel)]="itemDraft.half" placeholder="Half" min="0" />
+                  <input class="f-price" type="number" [(ngModel)]="itemDraft.full" placeholder="Full *" min="0" />
+                  <div class="f-tags">
+                    <label class="toggle-label">
+                      <input type="checkbox" [(ngModel)]="itemDraft.isVeg" />
+                      <span [style.color]="itemDraft.isVeg ? '#22a722' : '#c0392b'">
+                        {{ itemDraft.isVeg ? '🟢 Veg' : '🔴 Non-Veg' }}
+                      </span>
+                    </label>
+                    <label class="toggle-label">
+                      <input type="checkbox" [(ngModel)]="itemDraft.popular" />
+                      <span>⭐</span>
+                    </label>
+                  </div>
+                  <div class="f-actions">
+                    <button class="btn-save-item" (click)="commitItem()">✓</button>
+                    <button class="btn-cancel-item" (click)="cancelEdit()">✕</button>
+                  </div>
+                </div>
+              } @else {
+                <button class="add-item-btn" (click)="startAddItem(si)">+ Add Item</button>
+              }
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Add section -->
+      @if (addingSection) {
+        <div class="add-section-form">
+          <input type="text" [(ngModel)]="newSectionIcon" class="icon-field" placeholder="Icon" maxlength="4" />
+          <input type="text" [(ngModel)]="newSectionName" placeholder="Section name (e.g. DESSERTS)" class="name-field"
+            (keydown.enter)="addSection()" />
+          <button class="btn-primary small" (click)="addSection()">Add</button>
+          <button class="btn-ghost small" (click)="addingSection = false">Cancel</button>
+        </div>
+      } @else {
+        <button class="add-section-btn" (click)="addingSection = true">+ Add Section</button>
+      }
+
+      <div class="form-actions">
+        <button class="btn-primary" (click)="saveMenu()">💾 Save Menu</button>
+      </div>
+    </section>
+  }
+
+</main>
