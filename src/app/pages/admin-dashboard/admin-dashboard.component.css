@@ -246,7 +246,7 @@
 .add-section-btn:hover { border-color: var(--gold); color: var(--gold); }
 
 /* ── QR Code tab ─────────────────────────────────────── */
-.qr-section { align-items: flex-start; }
+.qr-section { align-items: center; }
 
 .qr-hint {
   font-size: 0.83rem; color: var(--text-muted); line-height: 1.55;

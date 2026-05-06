@@ -81,7 +81,7 @@
 .legend-half, .legend-full { width: 72px; text-align: center; font-size: 0.63rem; font-weight: 700; letter-spacing: 0.08em; color: var(--text-muted); }
 
 .item-list     { list-style: none; }
-.item-card     { display: flex; align-items: center; justify-content: space-between; padding: 0.68rem 0.55rem; border-bottom: 1px solid var(--border); transition: background 0.15s; border-radius: 8px; gap: 0.5rem; }
+.item-card     { display: flex; align-items: center; justify-content: space-between; padding: 0.68rem 0.25rem; border-bottom: 1px solid var(--border); transition: background 0.15s; border-radius: 8px; gap: 0.5rem; }
 .item-card:hover { background: var(--dark-card); }
 
 .item-left     { display: flex; align-items: flex-start; gap: 0.5rem; flex: 1; min-width: 0; }
@@ -180,6 +180,7 @@
 
 /* ─── HOLI 🎨 ──────────────────────────────────────── */
 .festival-overlay.theme-holi {
+  opacity: 0.45;
   background:
     radial-gradient(ellipse 45% 35% at 15% 25%, rgba(255,  0,153,.12) 0%, transparent 70%),
     radial-gradient(ellipse 35% 45% at 75% 65%, rgba(  0,200,255,.10) 0%, transparent 70%),
@@ -214,6 +215,7 @@
 
 /* ─── NAVRATRI 🪷 ──────────────────────────────────── */
 .festival-overlay.theme-navratri {
+  opacity: 0.4;
   background:
     radial-gradient(ellipse 60% 45% at 50%  0%, rgba(220, 20, 60,.14) 0%, transparent 70%),
     radial-gradient(ellipse 40% 30% at  0% 100%,rgba(255,106,  0,.10) 0%, transparent 70%),
@@ -250,6 +252,7 @@
 
 /* ─── INDEPENDENCE DAY 🇮🇳 ─────────────────────────── */
 .festival-overlay.theme-independence {
+  opacity: 0.4;
   background:
     linear-gradient(180deg,rgba(255,153, 51,.10)  0%,transparent 28%),
     linear-gradient(180deg,transparent 34%,rgba(255,255,255,.05) 44%,transparent 54%),
@@ -321,6 +324,7 @@
 
 /* ─── CHRISTMAS ❄️ ──────────────────────────────────── */
 .festival-overlay.theme-christmas {
+  opacity: 0.4;
   background:
     radial-gradient(ellipse 40% 30% at 50%  0%, rgba(204, 0, 0,.10) 0%, transparent 60%),
     radial-gradient(ellipse 30% 20% at  0% 50%, rgba( 10,80, 20,.08) 0%, transparent 60%),
@@ -363,10 +367,10 @@
   .menu-section   { scroll-margin-top: 150px; }
   .price-cell     { width: 60px; font-size: 0.82rem; }
   .legend-half, .legend-full { width: 60px; }
-  .item-card      { padding: 0.6rem 0.35rem; }
+  .item-card      { padding: 0.6rem 0.15rem; }
 }
 @media (min-width: 600px) {
-  .item-card  { padding: 0.75rem 1rem; }
+  .item-card  { padding: 0.75rem 0.4rem; }
   .item-name  { font-size: 0.97rem; }
   .price-cell { width: 84px; font-size: 0.93rem; }
   .legend-half, .legend-full { width: 84px; }
