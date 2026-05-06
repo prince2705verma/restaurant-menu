@@ -47,6 +47,31 @@ export const THEME_PRESETS: Record<string, ThemeConfig> = {
     dark: '#0d0812', darkCard: '#160f1e', surface: '#1e1428', border: '#2c1c3d',
     textMain: '#f0e8ff', textMuted: '#8060a0',
   },
+  'Diwali': {
+    gold: '#e87722', goldLight: '#ffb74d',
+    dark: '#190b00', darkCard: '#2b1500', surface: '#3e2000', border: '#5c3300',
+    textMain: '#fff3e0', textMuted: '#b07030',
+  },
+  'Holi': {
+    gold: '#e91e8c', goldLight: '#f48fb1',
+    dark: '#0a0012', darkCard: '#150020', surface: '#200030', border: '#350050',
+    textMain: '#fff0ff', textMuted: '#c060c0',
+  },
+  'Navratri': {
+    gold: '#e65100', goldLight: '#ff8f00',
+    dark: '#180500', darkCard: '#280a00', surface: '#3d1000', border: '#5a1800',
+    textMain: '#fff8e8', textMuted: '#bb6020',
+  },
+  'Eid': {
+    gold: '#00897b', goldLight: '#4db6ac',
+    dark: '#001510', darkCard: '#001f18', surface: '#002a22', border: '#003d30',
+    textMain: '#e0fff8', textMuted: '#3a9a8a',
+  },
+  'Christmas': {
+    gold: '#c62828', goldLight: '#ef5350',
+    dark: '#021a06', darkCard: '#0a2a0e', surface: '#123d18', border: '#1a5220',
+    textMain: '#f1fff1', textMuted: '#388e3c',
+  },
 };
 
 export const RESTAURANTS_DATA: Restaurant[] = [

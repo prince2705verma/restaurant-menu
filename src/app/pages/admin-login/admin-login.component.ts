@@ -17,6 +17,7 @@ export class AdminLoginComponent implements OnInit {
   restaurantId = 'royal-kitchen';
   restaurantName = '';
   restaurantLogo = '🍽️';
+  restaurants: { id: string; name: string }[] = [];
   username = '';
   password = '';
   showPassword = false;
@@ -32,19 +33,36 @@ export class AdminLoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.restaurants = this.restaurantService.getAllIds();
+
     this.route.queryParamMap.subscribe(params => {
       this.restaurantId = params.get('restaurantId') ?? 'royal-kitchen';
-      const r = this.restaurantService.getRestaurant(this.restaurantId);
-      if (r) {
-        this.restaurantName = r.name;
-        this.restaurantLogo = r.logo;
-        this.themeService.apply(r.theme);
+      this.loadRestaurant(this.restaurantId);
+
+      if (this.auth.isLoggedIn && this.auth.restaurantId === this.restaurantId) {
+        this.router.navigate(['/admin/dashboard'], { queryParams: { restaurantId: this.restaurantId } });
       }
     });
+  }
 
-    if (this.auth.isLoggedIn) {
-      this.router.navigate(['/admin/dashboard'], { queryParams: { restaurantId: this.auth.restaurantId } });
+  onRestaurantChange(): void {
+    this.loadRestaurant(this.restaurantId);
+    this.error = '';
+    this.username = '';
+    this.password = '';
+  }
+
+  private loadRestaurant(id: string): void {
+    const r = this.restaurantService.getRestaurant(id);
+    if (r) {
+      this.restaurantName = r.name;
+      this.restaurantLogo = r.logo;
+      this.themeService.apply(r.theme);
     }
+  }
+
+  isImageUrl(val: string): boolean {
+    return /^https?:\/\//i.test(val);
   }
 
   submit(): void {
