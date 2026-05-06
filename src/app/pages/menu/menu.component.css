@@ -116,8 +116,10 @@
    FESTIVAL OVERLAYS
    ══════════════════════════════════════════════════════ */
 
-/* Ensure page content sits above the fixed overlay */
-.header, .search-bar, .section-tabs, .menu-content, .footer {
+/* Ensure page content sits above the fixed overlay.
+   .search-bar and .section-tabs are excluded — they already have
+   position:sticky + z-index:100 via .sticky-bar and must not be overridden. */
+.header, .menu-content, .footer {
   position: relative;
   z-index: 1;
 }
