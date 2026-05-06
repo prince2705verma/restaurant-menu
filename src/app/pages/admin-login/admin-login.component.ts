@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { ThemeService } from '../../services/theme.service';
+import { THEME_PRESETS } from '../../restaurants.data';
 
 @Component({
   selector: 'app-admin-login',
@@ -21,9 +23,11 @@ export class AdminLoginComponent implements OnInit {
   constructor(
     private router: Router,
     private auth: AuthService,
+    private themeService: ThemeService,
   ) {}
 
   ngOnInit(): void {
+    this.themeService.apply(THEME_PRESETS['Velvet Noir']);
     if (this.auth.isLoggedIn) {
       this.router.navigate(['/admin/dashboard']);
     }
