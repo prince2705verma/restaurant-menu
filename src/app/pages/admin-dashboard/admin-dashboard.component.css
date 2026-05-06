@@ -293,22 +293,6 @@
   font-family: monospace; word-break: break-all; line-height: 1.4;
 }
 
-.login-url-box { margin-top: 0.5rem; }
-
-.copy-btn {
-  align-self: flex-start;
-  margin-top: 0.3rem;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  padding: 0.3rem 0.65rem;
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s;
-}
-.copy-btn:hover { color: var(--gold); border-color: var(--gold); }
-
 .qr-actions { display: flex; gap: 0.65rem; flex-wrap: wrap; }
 
 /* ── Responsive ──────────────────────────────────────── */

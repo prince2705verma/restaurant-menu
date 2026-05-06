@@ -327,13 +327,6 @@
           <span class="qr-url-text">{{ menuUrl }}</span>
         </div>
 
-        <div class="qr-url-box login-url-box">
-          <span class="qr-url-label">Owner Login Link</span>
-          <span class="qr-url-text">{{ loginUrl }}</span>
-          <button class="copy-btn" (click)="copyLoginUrl()" title="Copy login link">
-            {{ loginCopied ? '✅ Copied' : '📋 Copy' }}
-          </button>
-        </div>
 
         <div class="qr-actions">
           <button class="btn-primary" (click)="downloadQr()">⬇ Download PNG</button>

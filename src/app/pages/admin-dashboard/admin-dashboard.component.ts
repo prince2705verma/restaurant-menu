@@ -30,8 +30,6 @@ export class AdminDashboardComponent implements OnInit {
   savedMsg = '';
   qrDataUrl = '';
   menuUrl = '';
-  loginUrl = '';
-  loginCopied = false;
 
   // ── Info tab
   infoForm = { name: '', tagline: '', logo: '' };
@@ -216,18 +214,10 @@ export class AdminDashboardComponent implements OnInit {
     const base = document.querySelector('base')?.getAttribute('href') ?? '/';
     const baseUrl = base.startsWith('http') ? base : window.location.origin + base;
     this.menuUrl = baseUrl + 'menu?restaurantId=' + this.restaurant.id;
-    this.loginUrl = baseUrl + 'admin/login?restaurantId=' + this.restaurant.id;
     this.qrDataUrl = await QRCode.toDataURL(this.menuUrl, {
       width: 300,
       margin: 2,
       color: { dark: '#000000', light: '#ffffff' },
-    });
-  }
-
-  copyLoginUrl(): void {
-    navigator.clipboard.writeText(this.loginUrl).then(() => {
-      this.loginCopied = true;
-      setTimeout(() => (this.loginCopied = false), 2000);
     });
   }
 
@@ -278,6 +268,6 @@ export class AdminDashboardComponent implements OnInit {
 
   logout(): void {
     this.auth.logout();
-    this.router.navigate(['/admin/login'], { queryParams: { restaurantId: this.restaurant.id } });
+    this.router.navigate(['/admin/login']);
   }
 }

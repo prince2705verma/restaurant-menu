@@ -1,7 +1,6 @@
 <div class="login-page">
   <div class="login-wrapper">
 
-    <!-- Platform brand logo -->
     <div class="site-logo">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 68" width="270" height="68" role="img" aria-label="MenuWaala">
         <circle cx="34" cy="34" r="30" fill="rgba(201,150,43,0.10)" stroke="#c9962b" stroke-width="1.5"/>
@@ -16,54 +15,35 @@
       </svg>
     </div>
 
-    <!-- Invalid / missing link state -->
-    @if (invalidLink) {
-      <div class="invalid-card">
-        <div class="invalid-icon">🔗</div>
-        <h2 class="invalid-title">Invalid Login Link</h2>
-        <p class="invalid-msg">Please use the login link provided to you by MenuWaala. Each restaurant has a unique login URL.</p>
-      </div>
-    } @else {
-      <div class="login-card">
-        <div class="login-logo">
-          @if (isImageUrl(restaurantLogo)) {
-            <img [src]="restaurantLogo" [alt]="restaurantName" class="logo-img"/>
-          } @else {
-            {{ restaurantLogo }}
-          }
+    <div class="login-card">
+      <p class="login-subtitle">Sign in to your dashboard</p>
+
+      @if (error) {
+        <div class="error-msg">{{ error }}</div>
+      }
+
+      <form class="login-form" (ngSubmit)="submit()">
+        <div class="field">
+          <label>Username</label>
+          <input type="text" [(ngModel)]="username" name="username"
+            placeholder="Enter username" autocomplete="username" />
         </div>
-        <h1 class="login-title">{{ restaurantName }}</h1>
-        <p class="login-subtitle">Owner Dashboard</p>
-
-        @if (error) {
-          <div class="error-msg">{{ error }}</div>
-        }
-
-        <form class="login-form" (ngSubmit)="submit()">
-          <div class="field">
-            <label>Username</label>
-            <input type="text" [(ngModel)]="username" name="username"
-              placeholder="Enter username" autocomplete="username" />
+        <div class="field">
+          <label>Password</label>
+          <div class="pw-wrap">
+            <input [type]="showPassword ? 'text' : 'password'"
+              [(ngModel)]="password" name="password"
+              placeholder="Enter password" autocomplete="current-password" />
+            <button type="button" class="pw-toggle" (click)="showPassword = !showPassword">
+              {{ showPassword ? '🙈' : '👁️' }}
+            </button>
           </div>
-          <div class="field">
-            <label>Password</label>
-            <div class="pw-wrap">
-              <input [type]="showPassword ? 'text' : 'password'"
-                [(ngModel)]="password" name="password"
-                placeholder="Enter password" autocomplete="current-password" />
-              <button type="button" class="pw-toggle" (click)="showPassword = !showPassword">
-                {{ showPassword ? '🙈' : '👁️' }}
-              </button>
-            </div>
-          </div>
-          <button type="submit" class="login-btn" [disabled]="loading">
-            @if (loading) { Verifying… } @else { Login }
-          </button>
-        </form>
-
-        <button class="back-btn" (click)="goToMenu()">← Back to Menu</button>
-      </div>
-    }
+        </div>
+        <button type="submit" class="login-btn" [disabled]="loading">
+          @if (loading) { Verifying… } @else { Login }
+        </button>
+      </form>
+    </div>
 
   </div>
 </div>

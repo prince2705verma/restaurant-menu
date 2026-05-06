@@ -17,12 +17,12 @@ export class AuthService {
     if (raw) this.state = JSON.parse(raw);
   }
 
-  login(restaurantId: string, username: string, password: string): boolean {
-    const restaurant = RESTAURANTS_DATA.find(r => r.id === restaurantId);
+  login(username: string, password: string): boolean {
+    const restaurant = RESTAURANTS_DATA.find(
+      r => r.credentials.username === username && r.credentials.password === password
+    );
     if (!restaurant) return false;
-    const { credentials } = restaurant;
-    if (credentials.username !== username || credentials.password !== password) return false;
-    this.state = { restaurantId, username };
+    this.state = { restaurantId: restaurant.id, username };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
     return true;
   }

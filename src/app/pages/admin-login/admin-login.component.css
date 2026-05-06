@@ -27,22 +27,18 @@
   background: var(--dark-card);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 2.5rem 2rem;
+  padding: 2rem 2rem 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.4rem;
 }
 
-.login-logo   { font-size: 3.5rem; line-height: 1; margin-bottom: 0.2rem; }
-.login-title  { font-size: 1.4rem; font-weight: 700; color: var(--gold-light); text-align: center; letter-spacing: 0.04em; }
-.login-subtitle { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.08em; margin-bottom: 0.8rem; }
-
-.logo-img {
-  width: 3.5rem;
-  height: 3.5rem;
-  object-fit: contain;
-  border-radius: 8px;
+.login-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
 }
 
 .error-msg {
@@ -91,23 +87,6 @@
 }
 .field input:focus { border-color: var(--gold); }
 
-.invalid-card {
-  width: 100%;
-  max-width: 400px;
-  background: var(--dark-card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 2.5rem 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  text-align: center;
-}
-.invalid-icon  { font-size: 2.5rem; }
-.invalid-title { font-size: 1.2rem; font-weight: 700; color: var(--gold-light); margin: 0; }
-.invalid-msg   { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin: 0; }
-
 .pw-wrap { position: relative; }
 .pw-wrap input { padding-right: 2.8rem; }
 .pw-toggle {
@@ -137,16 +116,5 @@
   transition: opacity 0.2s;
   letter-spacing: 0.04em;
 }
-.login-btn:hover   { opacity: 0.9; }
-.login-btn:disabled{ opacity: 0.6; cursor: not-allowed; }
-
-.back-btn {
-  margin-top: 1.2rem;
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  font-size: 0.82rem;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-.back-btn:hover { color: var(--gold); }
+.login-btn:hover    { opacity: 0.9; }
+.login-btn:disabled { opacity: 0.6; cursor: not-allowed; }
