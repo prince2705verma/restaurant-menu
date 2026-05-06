@@ -4,72 +4,66 @@
     <!-- Platform brand logo -->
     <div class="site-logo">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 68" width="270" height="68" role="img" aria-label="MenuWaala">
-        <!-- Outer glow ring -->
         <circle cx="34" cy="34" r="30" fill="rgba(201,150,43,0.10)" stroke="#c9962b" stroke-width="1.5"/>
-        <!-- Inner accent ring -->
         <circle cx="34" cy="34" r="22" fill="none" stroke="rgba(201,150,43,0.25)" stroke-width="1"/>
-        <!-- Fork tines -->
         <line x1="25" y1="17" x2="25" y2="26" stroke="#f0c96a" stroke-width="1.8" stroke-linecap="round"/>
         <line x1="28.5" y1="17" x2="28.5" y2="26" stroke="#f0c96a" stroke-width="1.8" stroke-linecap="round"/>
         <line x1="32" y1="17" x2="32" y2="26" stroke="#f0c96a" stroke-width="1.8" stroke-linecap="round"/>
-        <!-- Fork handle -->
         <path d="M25 26 Q25 31 28.5 32.5 L28.5 51" stroke="#f0c96a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-        <!-- Knife blade + handle -->
         <path d="M41 17 L41 27 Q45 29.5 45 32 L45 51" stroke="#f0c96a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-        <!-- Brand name -->
         <text x="76" y="30" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-weight="700" fill="#f0c96a" letter-spacing="0.5">MenuWaala</text>
-        <!-- Tagline -->
         <text x="77" y="50" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#a08850" letter-spacing="3.5">RESTAURANT MANAGER</text>
       </svg>
     </div>
 
-    <div class="login-card">
-      <div class="login-logo">
-        @if (isImageUrl(restaurantLogo)) {
-          <img [src]="restaurantLogo" [alt]="restaurantName" class="logo-img"/>
-        } @else {
-          {{ restaurantLogo }}
-        }
+    <!-- Invalid / missing link state -->
+    @if (invalidLink) {
+      <div class="invalid-card">
+        <div class="invalid-icon">🔗</div>
+        <h2 class="invalid-title">Invalid Login Link</h2>
+        <p class="invalid-msg">Please use the login link provided to you by MenuWaala. Each restaurant has a unique login URL.</p>
       </div>
-      <h1 class="login-title">{{ restaurantName }}</h1>
-      <p class="login-subtitle">Owner Dashboard</p>
-
-      @if (error) {
-        <div class="error-msg">{{ error }}</div>
-      }
-
-      <form class="login-form" (ngSubmit)="submit()">
-        <div class="field">
-          <label>Restaurant</label>
-          <select [(ngModel)]="restaurantId" name="restaurantId" (ngModelChange)="onRestaurantChange()">
-            @for (r of restaurants; track r.id) {
-              <option [value]="r.id">{{ r.name }}</option>
-            }
-          </select>
+    } @else {
+      <div class="login-card">
+        <div class="login-logo">
+          @if (isImageUrl(restaurantLogo)) {
+            <img [src]="restaurantLogo" [alt]="restaurantName" class="logo-img"/>
+          } @else {
+            {{ restaurantLogo }}
+          }
         </div>
-        <div class="field">
-          <label>Username</label>
-          <input type="text" [(ngModel)]="username" name="username"
-            placeholder="Enter username" autocomplete="username" />
-        </div>
-        <div class="field">
-          <label>Password</label>
-          <div class="pw-wrap">
-            <input [type]="showPassword ? 'text' : 'password'"
-              [(ngModel)]="password" name="password"
-              placeholder="Enter password" autocomplete="current-password" />
-            <button type="button" class="pw-toggle" (click)="showPassword = !showPassword">
-              {{ showPassword ? '🙈' : '👁️' }}
-            </button>
+        <h1 class="login-title">{{ restaurantName }}</h1>
+        <p class="login-subtitle">Owner Dashboard</p>
+
+        @if (error) {
+          <div class="error-msg">{{ error }}</div>
+        }
+
+        <form class="login-form" (ngSubmit)="submit()">
+          <div class="field">
+            <label>Username</label>
+            <input type="text" [(ngModel)]="username" name="username"
+              placeholder="Enter username" autocomplete="username" />
           </div>
-        </div>
-        <button type="submit" class="login-btn" [disabled]="loading">
-          @if (loading) { Verifying… } @else { Login }
-        </button>
-      </form>
+          <div class="field">
+            <label>Password</label>
+            <div class="pw-wrap">
+              <input [type]="showPassword ? 'text' : 'password'"
+                [(ngModel)]="password" name="password"
+                placeholder="Enter password" autocomplete="current-password" />
+              <button type="button" class="pw-toggle" (click)="showPassword = !showPassword">
+                {{ showPassword ? '🙈' : '👁️' }}
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="login-btn" [disabled]="loading">
+            @if (loading) { Verifying… } @else { Login }
+          </button>
+        </form>
 
-      <button class="back-btn" (click)="goToMenu()">← Back to Menu</button>
-    </div>
+        <button class="back-btn" (click)="goToMenu()">← Back to Menu</button>
+      </div>
+    }
 
   </div>
 </div>
