@@ -112,6 +112,247 @@
 .not-found span { font-size: 3rem; display: block; margin-bottom: 1rem; }
 .not-found h2   { font-size: 1.4rem; color: var(--text-main); margin-bottom: 0.5rem; }
 
+/* ══════════════════════════════════════════════════════
+   FESTIVAL OVERLAYS
+   ══════════════════════════════════════════════════════ */
+
+/* Ensure page content sits above the fixed overlay */
+.header, .search-bar, .section-tabs, .menu-content, .footer {
+  position: relative;
+  z-index: 1;
+}
+
+.festival-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.festival-overlay .p {
+  position: absolute;
+  display: block;
+  line-height: 1;
+}
+
+/* ─── DIWALI 🪔 ─────────────────────────────────────── */
+.festival-overlay.theme-diwali {
+  background:
+    radial-gradient(ellipse 70% 50% at  5% 90%, rgba(255,149,  0,.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 95% 75%, rgba(255,204,  0,.12) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 50%  5%, rgba(255,100,  0,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 25% at 30% 50%, rgba(255,180,  0,.05) 0%, transparent 60%);
+}
+.theme-diwali .p::before               { content:'🪔'; font-size:1.8rem; }
+.theme-diwali .p:nth-child(9)::before,
+.theme-diwali .p:nth-child(10)::before,
+.theme-diwali .p:nth-child(11)::before,
+.theme-diwali .p:nth-child(12)::before { content:'✨'; font-size:1.2rem; }
+.theme-diwali .p:nth-child(13)::before,
+.theme-diwali .p:nth-child(14)::before { content:'🎆'; font-size:2.2rem; }
+.theme-diwali .p:nth-child(15)::before { content:'⭐'; font-size:1.6rem; }
+.theme-diwali .p:nth-child(1)  {left: 4%;top:12%;animation:diyaFloat 6.0s ease-in-out infinite 0.0s;}
+.theme-diwali .p:nth-child(2)  {left:18%;top:68%;animation:diyaFloat 7.0s ease-in-out infinite 0.9s;}
+.theme-diwali .p:nth-child(3)  {left:30%;top:33%;animation:diyaFloat 5.5s ease-in-out infinite 1.7s;}
+.theme-diwali .p:nth-child(4)  {left:48%;top:78%;animation:diyaFloat 8.0s ease-in-out infinite 2.2s;}
+.theme-diwali .p:nth-child(5)  {left:62%;top:18%;animation:diyaFloat 6.5s ease-in-out infinite 0.4s;}
+.theme-diwali .p:nth-child(6)  {left:77%;top:50%;animation:diyaFloat 7.5s ease-in-out infinite 1.1s;}
+.theme-diwali .p:nth-child(7)  {left:90%;top:78%;animation:diyaFloat 5.0s ease-in-out infinite 3.2s;}
+.theme-diwali .p:nth-child(8)  {left:40%;top:45%;animation:diyaFloat 9.0s ease-in-out infinite 1.4s;}
+.theme-diwali .p:nth-child(9)  {left:10%;top:42%;animation:sparkle  2.8s ease-in-out infinite 0.2s;}
+.theme-diwali .p:nth-child(10) {left:55%;top:25%;animation:sparkle  3.4s ease-in-out infinite 1.9s;}
+.theme-diwali .p:nth-child(11) {left:72%;top:88%;animation:sparkle  2.5s ease-in-out infinite 0.7s;}
+.theme-diwali .p:nth-child(12) {left:84%;top:30%;animation:sparkle  4.0s ease-in-out infinite 2.8s;}
+.theme-diwali .p:nth-child(13) {left:22%;top:85%;animation:sparkle  5.0s ease-in-out infinite 1.5s;}
+.theme-diwali .p:nth-child(14) {left:88%;top: 8%;animation:sparkle  4.5s ease-in-out infinite 0.5s;}
+.theme-diwali .p:nth-child(15) {left:35%;top: 8%;animation:sparkle  3.0s ease-in-out infinite 3.5s;}
+@keyframes diyaFloat {
+  0%,100% {transform:translateY(0) scale(1.00);opacity:.65;filter:drop-shadow(0 0 8px rgba(255,190,0,.60));}
+  50%     {transform:translateY(-22px) scale(1.12);opacity:.95;filter:drop-shadow(0 0 28px rgba(255,230,0,.95));}
+}
+@keyframes sparkle {
+  0%,100% {opacity:0;   transform:scale(.4) rotate(0deg);}
+  50%     {opacity:.95; transform:scale(1.4) rotate(180deg);}
+}
+
+/* ─── HOLI 🎨 ──────────────────────────────────────── */
+.festival-overlay.theme-holi {
+  background:
+    radial-gradient(ellipse 45% 35% at 15% 25%, rgba(255,  0,153,.12) 0%, transparent 70%),
+    radial-gradient(ellipse 35% 45% at 75% 65%, rgba(  0,200,255,.10) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 25% at 55% 95%, rgba(255,255,  0,.08) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 30% at 85%  5%, rgba(170,  0,255,.08) 0%, transparent 70%);
+}
+.theme-holi .p {
+  border-radius:50%; opacity:0; bottom:-40px; filter:blur(3px);
+  animation:holiRise 7s ease-out infinite;
+}
+.theme-holi .p:nth-child(1)  {width:28px;height:28px;background:#ff1493;left: 7%;animation-delay:0.0s;}
+.theme-holi .p:nth-child(2)  {width:20px;height:20px;background:#ff6600;left:16%;animation-delay:1.1s;}
+.theme-holi .p:nth-child(3)  {width:34px;height:34px;background:#00ccff;left:25%;animation-delay:2.0s;}
+.theme-holi .p:nth-child(4)  {width:22px;height:22px;background:#ffee00;left:35%;animation-delay:0.5s;}
+.theme-holi .p:nth-child(5)  {width:30px;height:30px;background:#00ff88;left:44%;animation-delay:3.1s;}
+.theme-holi .p:nth-child(6)  {width:18px;height:18px;background:#ff1493;left:53%;animation-delay:1.6s;}
+.theme-holi .p:nth-child(7)  {width:36px;height:36px;background:#aa00ff;left:63%;animation-delay:0.8s;}
+.theme-holi .p:nth-child(8)  {width:24px;height:24px;background:#ff8800;left:73%;animation-delay:2.5s;}
+.theme-holi .p:nth-child(9)  {width:26px;height:26px;background:#00ccff;left:82%;animation-delay:4.0s;}
+.theme-holi .p:nth-child(10) {width:20px;height:20px;background:#ffee00;left:91%;animation-delay:0.3s;}
+.theme-holi .p:nth-child(11) {width:32px;height:32px;background:#ff1493;left:12%;animation-delay:3.8s;}
+.theme-holi .p:nth-child(12) {width:18px;height:18px;background:#00ff88;left:31%;animation-delay:5.2s;}
+.theme-holi .p:nth-child(13) {width:28px;height:28px;background:#ff6600;left:58%;animation-delay:1.3s;}
+.theme-holi .p:nth-child(14) {width:22px;height:22px;background:#aa00ff;left:78%;animation-delay:4.6s;}
+.theme-holi .p:nth-child(15) {width:16px;height:16px;background:#00ccff;left:47%;animation-delay:6.0s;}
+@keyframes holiRise {
+  0%  {opacity:0;   transform:translateY(0)      translateX(0)   scale(.6);}
+  10% {opacity:.85;}
+  80% {opacity:.5;}
+  100%{opacity:0;   transform:translateY(-100vh) translateX(40px) scale(1.3);}
+}
+
+/* ─── NAVRATRI 🪷 ──────────────────────────────────── */
+.festival-overlay.theme-navratri {
+  background:
+    radial-gradient(ellipse 60% 45% at 50%  0%, rgba(220, 20, 60,.14) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at  0% 100%,rgba(255,106,  0,.10) 0%, transparent 70%),
+    radial-gradient(ellipse 35% 25% at 100% 50%,rgba(255,215,  0,.08) 0%, transparent 70%);
+}
+.theme-navratri .p {
+  width:20px;height:20px;
+  animation:navSpin 5s ease-in-out infinite;
+  transform:rotate(45deg) scale(0);
+}
+.theme-navratri .p:nth-child(3n+1){background:rgba(220, 20, 60,.70);}
+.theme-navratri .p:nth-child(3n+2){background:rgba(255,165,  0,.70);}
+.theme-navratri .p:nth-child(3n)  {background:rgba( 34,180, 34,.60);}
+.theme-navratri .p:nth-child(1)  {left: 5%;top:15%;animation-delay:0.0s;width:22px;height:22px;}
+.theme-navratri .p:nth-child(2)  {left:15%;top:55%;animation-delay:0.8s;}
+.theme-navratri .p:nth-child(3)  {left:25%;top:80%;animation-delay:1.5s;width:28px;height:28px;}
+.theme-navratri .p:nth-child(4)  {left:35%;top:25%;animation-delay:2.2s;}
+.theme-navratri .p:nth-child(5)  {left:48%;top:70%;animation-delay:0.4s;width:24px;height:24px;}
+.theme-navratri .p:nth-child(6)  {left:60%;top:40%;animation-delay:3.0s;}
+.theme-navratri .p:nth-child(7)  {left:70%;top:85%;animation-delay:1.2s;width:18px;height:18px;}
+.theme-navratri .p:nth-child(8)  {left:80%;top:15%;animation-delay:2.8s;}
+.theme-navratri .p:nth-child(9)  {left:90%;top:60%;animation-delay:0.6s;width:26px;height:26px;}
+.theme-navratri .p:nth-child(10) {left:10%;top:90%;animation-delay:1.9s;}
+.theme-navratri .p:nth-child(11) {left:55%;top:10%;animation-delay:3.5s;width:20px;height:20px;}
+.theme-navratri .p:nth-child(12) {left:42%;top:50%;animation-delay:0.2s;}
+.theme-navratri .p:nth-child(13) {left:75%;top:30%;animation-delay:2.4s;width:24px;height:24px;}
+.theme-navratri .p:nth-child(14) {left:30%;top:45%;animation-delay:4.0s;}
+.theme-navratri .p:nth-child(15) {left:85%;top:75%;animation-delay:1.6s;width:22px;height:22px;}
+@keyframes navSpin {
+  0%  {transform:rotate( 45deg) scale(.7); opacity:.2;}
+  50% {transform:rotate(225deg) scale(1.3);opacity:.8;}
+  100%{transform:rotate(405deg) scale(.7); opacity:.2;}
+}
+
+/* ─── INDEPENDENCE DAY 🇮🇳 ─────────────────────────── */
+.festival-overlay.theme-independence {
+  background:
+    linear-gradient(180deg,rgba(255,153, 51,.10)  0%,transparent 28%),
+    linear-gradient(180deg,transparent 34%,rgba(255,255,255,.05) 44%,transparent 54%),
+    linear-gradient(180deg,transparent 66%,rgba( 19,136,  8,.10) 100%);
+}
+.theme-independence .p:nth-child(3n+1)::before {content:'★';font-size:1.1rem;color:#ff9933;}
+.theme-independence .p:nth-child(3n+2)::before {content:'✦';font-size:0.9rem;color:rgba(255,255,255,.85);}
+.theme-independence .p:nth-child(3n)::before   {content:'★';font-size:1.0rem;color:#138808;}
+.theme-independence .p:nth-child(14)::before   {content:'🇮🇳';font-size:2.2rem;}
+.theme-independence .p:nth-child(15)::before   {content:'☸'; font-size:3.5rem;color:rgba(0,0,136,.35);}
+.theme-independence .p:nth-child(1)  {left: 5%;top:10%;animation:indieFloat 4.0s ease-in-out infinite 0.0s;}
+.theme-independence .p:nth-child(2)  {left:15%;top:28%;animation:indieFloat 5.0s ease-in-out infinite 0.7s;}
+.theme-independence .p:nth-child(3)  {left:25%;top:62%;animation:indieFloat 3.5s ease-in-out infinite 1.5s;}
+.theme-independence .p:nth-child(4)  {left:35%;top:15%;animation:indieFloat 6.0s ease-in-out infinite 2.2s;}
+.theme-independence .p:nth-child(5)  {left:45%;top:78%;animation:indieFloat 4.5s ease-in-out infinite 0.4s;}
+.theme-independence .p:nth-child(6)  {left:55%;top:38%;animation:indieFloat 5.5s ease-in-out infinite 3.0s;}
+.theme-independence .p:nth-child(7)  {left:65%;top:82%;animation:indieFloat 4.0s ease-in-out infinite 1.2s;}
+.theme-independence .p:nth-child(8)  {left:75%;top:22%;animation:indieFloat 6.0s ease-in-out infinite 2.8s;}
+.theme-independence .p:nth-child(9)  {left:85%;top:55%;animation:indieFloat 3.8s ease-in-out infinite 0.6s;}
+.theme-independence .p:nth-child(10) {left:10%;top:88%;animation:indieFloat 5.0s ease-in-out infinite 1.9s;}
+.theme-independence .p:nth-child(11) {left:32%;top:42%;animation:indieFloat 4.2s ease-in-out infinite 3.5s;}
+.theme-independence .p:nth-child(12) {left:52%;top:92%;animation:indieFloat 6.0s ease-in-out infinite 0.2s;}
+.theme-independence .p:nth-child(13) {left:72%;top:48%;animation:indieFloat 4.8s ease-in-out infinite 2.4s;}
+.theme-independence .p:nth-child(14) {left:20%;top: 5%;animation:indieFloat 8.0s ease-in-out infinite 4.0s;}
+.theme-independence .p:nth-child(15) {left:78%;top: 6%;animation:chakraSpin 8.0s linear infinite 0.0s;}
+@keyframes indieFloat {
+  0%,100%{transform:translateY(0);     opacity:.6;}
+  50%    {transform:translateY(-25px); opacity:1; }
+}
+@keyframes chakraSpin {
+  from{transform:rotate(0deg);  opacity:.3;}
+  to  {transform:rotate(360deg);opacity:.3;}
+}
+
+/* ─── EID 🌙 ────────────────────────────────────────── */
+.festival-overlay.theme-eid {
+  background:
+    radial-gradient(ellipse 50% 60% at 88%  8%, rgba( 0,184,100,.14) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 30% at 12% 80%, rgba( 0,220,130,.08) 0%, transparent 60%);
+}
+.theme-eid .p::before                 {content:'✦';font-size:1.0rem;color:#ffd700;}
+.theme-eid .p:nth-child(3n+2)::before{content:'⭐';font-size:1.2rem;}
+.theme-eid .p:nth-child(3n)::before  {content:'✧';font-size:0.9rem;color:rgba(255,255,255,.75);}
+.theme-eid .p:nth-child(15)::before  {content:'🌙';font-size:3.5rem;}
+.theme-eid .p:nth-child(1)  {left: 5%;top: 8%;animation:twinkle  2.5s ease-in-out infinite 0.0s;}
+.theme-eid .p:nth-child(2)  {left:15%;top:25%;animation:twinkle  3.0s ease-in-out infinite 0.6s;}
+.theme-eid .p:nth-child(3)  {left:25%;top:55%;animation:twinkle  2.0s ease-in-out infinite 1.4s;}
+.theme-eid .p:nth-child(4)  {left:38%;top:12%;animation:twinkle  3.5s ease-in-out infinite 2.0s;}
+.theme-eid .p:nth-child(5)  {left:50%;top:70%;animation:twinkle  2.8s ease-in-out infinite 0.3s;}
+.theme-eid .p:nth-child(6)  {left:62%;top:30%;animation:twinkle  3.2s ease-in-out infinite 1.8s;}
+.theme-eid .p:nth-child(7)  {left:72%;top:80%;animation:twinkle  2.2s ease-in-out infinite 0.9s;}
+.theme-eid .p:nth-child(8)  {left:80%;top:50%;animation:twinkle  4.0s ease-in-out infinite 2.5s;}
+.theme-eid .p:nth-child(9)  {left:90%;top:20%;animation:twinkle  2.6s ease-in-out infinite 0.4s;}
+.theme-eid .p:nth-child(10) {left: 8%;top:65%;animation:twinkle  3.8s ease-in-out infinite 1.2s;}
+.theme-eid .p:nth-child(11) {left:45%;top:40%;animation:twinkle  2.4s ease-in-out infinite 3.0s;}
+.theme-eid .p:nth-child(12) {left:58%;top:88%;animation:twinkle  3.0s ease-in-out infinite 0.1s;}
+.theme-eid .p:nth-child(13) {left:30%;top:82%;animation:twinkle  2.8s ease-in-out infinite 2.2s;}
+.theme-eid .p:nth-child(14) {left:68%;top:15%;animation:twinkle  3.5s ease-in-out infinite 1.7s;}
+.theme-eid .p:nth-child(15) {left:82%;top: 3%;animation:moonFloat 6.0s ease-in-out infinite 0.0s;}
+@keyframes twinkle {
+  0%,100%{opacity:.15;transform:scale(.7) rotate(0deg); }
+  50%    {opacity:1;  transform:scale(1.3) rotate(20deg);}
+}
+@keyframes moonFloat {
+  0%,100%{opacity:.55;transform:translateY(0)     scale(1);}
+  50%    {opacity:.80;transform:translateY(-12px) scale(1.06);}
+}
+
+/* ─── CHRISTMAS ❄️ ──────────────────────────────────── */
+.festival-overlay.theme-christmas {
+  background:
+    radial-gradient(ellipse 40% 30% at 50%  0%, rgba(204, 0, 0,.10) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 20% at  0% 50%, rgba( 10,80, 20,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 20% at 100% 50%,rgba( 10,80, 20,.08) 0%, transparent 60%);
+}
+.theme-christmas .p::before               {content:'❄';font-size:1.4rem;color:rgba(210,235,255,.85);}
+.theme-christmas .p:nth-child(3n+2)::before{content:'❅';font-size:1.1rem;color:rgba(190,220,255,.75);}
+.theme-christmas .p:nth-child(3n)::before  {content:'❆';font-size:1.8rem;color:rgba(225,240,255,.65);}
+.theme-christmas .p:nth-child(15)::before  {content:'⭐';font-size:2.5rem;}
+.theme-christmas .p {top:-40px;animation:snowfall linear infinite;}
+.theme-christmas .p:nth-child(1)  {left: 4%;animation-duration: 8.0s;animation-delay:0.0s;}
+.theme-christmas .p:nth-child(2)  {left:11%;animation-duration:10.5s;animation-delay:1.5s;}
+.theme-christmas .p:nth-child(3)  {left:19%;animation-duration: 7.0s;animation-delay:3.0s;}
+.theme-christmas .p:nth-child(4)  {left:27%;animation-duration:12.0s;animation-delay:0.8s;}
+.theme-christmas .p:nth-child(5)  {left:35%;animation-duration: 9.0s;animation-delay:4.5s;}
+.theme-christmas .p:nth-child(6)  {left:43%;animation-duration: 7.5s;animation-delay:2.2s;}
+.theme-christmas .p:nth-child(7)  {left:51%;animation-duration:11.0s;animation-delay:1.0s;}
+.theme-christmas .p:nth-child(8)  {left:59%;animation-duration: 8.5s;animation-delay:5.5s;}
+.theme-christmas .p:nth-child(9)  {left:67%;animation-duration:10.0s;animation-delay:0.3s;}
+.theme-christmas .p:nth-child(10) {left:75%;animation-duration: 7.0s;animation-delay:3.8s;}
+.theme-christmas .p:nth-child(11) {left:82%;animation-duration: 9.5s;animation-delay:1.8s;}
+.theme-christmas .p:nth-child(12) {left:89%;animation-duration: 8.0s;animation-delay:6.2s;}
+.theme-christmas .p:nth-child(13) {left:23%;animation-duration:13.0s;animation-delay:4.2s;}
+.theme-christmas .p:nth-child(14) {left:63%;animation-duration: 6.5s;animation-delay:2.8s;}
+.theme-christmas .p:nth-child(15) {left:47%;top:8%;animation:starbright 2s ease-in-out infinite;}
+@keyframes snowfall {
+  0%  {opacity:0;  transform:translateY(0)     translateX(0)    rotate(0deg);  }
+  10% {opacity:.9; }
+  90% {opacity:.8; }
+  100%{opacity:0;  transform:translateY(110vh) translateX(30px) rotate(360deg);}
+}
+@keyframes starbright {
+  0%,100%{opacity:.65;transform:scale(.9) rotate(0deg); }
+  50%    {opacity:1;  transform:scale(1.2) rotate(25deg);}
+}
+
 /* ── Responsive ────────────────────────────────── */
 @media (max-width: 480px) {
   .section-tabs   { top: 84px; }

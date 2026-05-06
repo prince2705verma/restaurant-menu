@@ -9,6 +9,7 @@ export interface ThemeConfig {
   border: string;
   textMain: string;
   textMuted: string;
+  festivalClass?: string;
 }
 
 export interface Restaurant {
@@ -22,6 +23,8 @@ export interface Restaurant {
 }
 
 export const THEME_PRESETS: Record<string, ThemeConfig> = {
+
+  // ── Classic ──────────────────────────────────────────
   'Royal Gold': {
     gold: '#c9962b', goldLight: '#f0c96a',
     dark: '#1a1209', darkCard: '#231a08', surface: '#2c2010', border: '#3d2e10',
@@ -47,30 +50,70 @@ export const THEME_PRESETS: Record<string, ThemeConfig> = {
     dark: '#0d0812', darkCard: '#160f1e', surface: '#1e1428', border: '#2c1c3d',
     textMain: '#f0e8ff', textMuted: '#8060a0',
   },
+
+  // ── Classy ───────────────────────────────────────────
+  'Velvet Noir': {
+    gold: '#c9a0b4', goldLight: '#e8c8d8',
+    dark: '#0d080c', darkCard: '#1a1020', surface: '#251530', border: '#352040',
+    textMain: '#f5eef2', textMuted: '#9a7888',
+  },
+  'Onyx': {
+    gold: '#d4af37', goldLight: '#ffd700',
+    dark: '#060606', darkCard: '#111111', surface: '#1a1a1a', border: '#282828',
+    textMain: '#f5f0e0', textMuted: '#888060',
+  },
+  'Jade': {
+    gold: '#00b894', goldLight: '#55efc4',
+    dark: '#020e0a', darkCard: '#051a14', surface: '#082820', border: '#0d3828',
+    textMain: '#e0fff5', textMuted: '#3a8870',
+  },
+  'Bronze': {
+    gold: '#cd7f32', goldLight: '#e8a060',
+    dark: '#080604', darkCard: '#121008', surface: '#1e180c', border: '#2c2410',
+    textMain: '#f5ece0', textMuted: '#8a6840',
+  },
+  'Arctic': {
+    gold: '#5599cc', goldLight: '#88ccff',
+    dark: '#040810', darkCard: '#080f1e', surface: '#0c152c', border: '#121c3a',
+    textMain: '#e8f4ff', textMuted: '#5070a0',
+  },
+
+  // ── Festival ─────────────────────────────────────────
   'Diwali': {
-    gold: '#e87722', goldLight: '#ffb74d',
-    dark: '#190b00', darkCard: '#2b1500', surface: '#3e2000', border: '#5c3300',
-    textMain: '#fff3e0', textMuted: '#b07030',
+    gold: '#ff9500', goldLight: '#ffcc00',
+    dark: '#0a0500', darkCard: '#150900', surface: '#201200', border: '#301c00',
+    textMain: '#fff8e8', textMuted: '#cc8800',
+    festivalClass: 'theme-diwali',
   },
   'Holi': {
-    gold: '#e91e8c', goldLight: '#f48fb1',
-    dark: '#0a0012', darkCard: '#150020', surface: '#200030', border: '#350050',
-    textMain: '#fff0ff', textMuted: '#c060c0',
+    gold: '#ff0099', goldLight: '#ff66cc',
+    dark: '#08000f', darkCard: '#10001e', surface: '#18002e', border: '#250040',
+    textMain: '#fff0ff', textMuted: '#cc3399',
+    festivalClass: 'theme-holi',
   },
   'Navratri': {
-    gold: '#e65100', goldLight: '#ff8f00',
-    dark: '#180500', darkCard: '#280a00', surface: '#3d1000', border: '#5a1800',
-    textMain: '#fff8e8', textMuted: '#bb6020',
+    gold: '#ff6a00', goldLight: '#ffa040',
+    dark: '#120400', darkCard: '#1f0800', surface: '#2e0e00', border: '#401800',
+    textMain: '#fff5e8', textMuted: '#cc5500',
+    festivalClass: 'theme-navratri',
+  },
+  'Independence Day': {
+    gold: '#ff9933', goldLight: '#ffbb66',
+    dark: '#030510', darkCard: '#07091e', surface: '#0c0f2e', border: '#131642',
+    textMain: '#f0f4ff', textMuted: '#5066aa',
+    festivalClass: 'theme-independence',
   },
   'Eid': {
-    gold: '#00897b', goldLight: '#4db6ac',
-    dark: '#001510', darkCard: '#001f18', surface: '#002a22', border: '#003d30',
-    textMain: '#e0fff8', textMuted: '#3a9a8a',
+    gold: '#00b865', goldLight: '#00e880',
+    dark: '#010d06', darkCard: '#041810', surface: '#072518', border: '#0c3525',
+    textMain: '#e0fff0', textMuted: '#309060',
+    festivalClass: 'theme-eid',
   },
   'Christmas': {
-    gold: '#c62828', goldLight: '#ef5350',
-    dark: '#021a06', darkCard: '#0a2a0e', surface: '#123d18', border: '#1a5220',
-    textMain: '#f1fff1', textMuted: '#388e3c',
+    gold: '#cc0000', goldLight: '#ff4040',
+    dark: '#010a03', darkCard: '#051508', surface: '#0a2010', border: '#102e18',
+    textMain: '#f0fff2', textMuted: '#307040',
+    festivalClass: 'theme-christmas',
   },
 };
 

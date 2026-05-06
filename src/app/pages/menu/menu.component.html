@@ -5,6 +5,11 @@
     <p>Check the URL and try again.</p>
   </div>
 } @else if (restaurant) {
+  @if (festivalClass) {
+    <div class="festival-overlay" [ngClass]="festivalClass">
+      @for (p of particles; track p) { <span class="p"></span> }
+    </div>
+  }
   <!-- Header -->
   <header class="header">
     <div class="header-content">
@@ -21,9 +26,11 @@
           <p class="restaurant-tagline">{{ restaurant.tagline }}</p>
         </div>
       </div>
-      <button class="admin-btn" (click)="goToAdmin()" title="Owner Login">
-        ⚙️ <span class="admin-btn-label">Manage</span>
-      </button>
+      @if (auth.isLoggedIn && auth.restaurantId === restaurant.id) {
+        <button class="admin-btn" (click)="goToAdmin()" title="Owner Dashboard">
+          ⚙️ <span class="admin-btn-label">Manage</span>
+        </button>
+      }
     </div>
   </header>
 

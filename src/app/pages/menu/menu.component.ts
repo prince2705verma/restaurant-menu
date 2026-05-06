@@ -21,6 +21,9 @@ export class MenuComponent implements OnInit {
   searchQuery = '';
   filterVeg: 'all' | 'veg' | 'nonveg' = 'all';
   notFound = false;
+  readonly particles = Array.from({ length: 15 }, (_, i) => i);
+
+  get festivalClass(): string { return this.restaurant?.theme.festivalClass ?? ''; }
 
   constructor(
     private route: ActivatedRoute,
