@@ -17,6 +17,7 @@ export interface Restaurant {
   name: string;
   tagline: string;
   logo: string;
+  discount?: number;
   theme: ThemeConfig;
   credentials: { username: string; password: string };
   sections: MenuSection[];

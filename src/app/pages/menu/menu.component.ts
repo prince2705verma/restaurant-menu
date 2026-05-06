@@ -24,6 +24,10 @@ export class MenuComponent implements OnInit {
   readonly particles = Array.from({ length: 15 }, (_, i) => i);
 
   get festivalClass(): string { return this.restaurant?.theme.festivalClass ?? ''; }
+  get discount(): number { return this.restaurant?.discount ?? 0; }
+  discounted(price: number): number {
+    return Math.round(price * (1 - this.discount / 100));
+  }
 
   constructor(
     private route: ActivatedRoute,

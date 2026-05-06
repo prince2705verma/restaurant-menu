@@ -32,7 +32,7 @@ export class AdminDashboardComponent implements OnInit {
   menuUrl = '';
 
   // ── Info tab
-  infoForm = { name: '', tagline: '', logo: '' };
+  infoForm = { name: '', tagline: '', logo: '', discount: 0 };
 
   // ── Theme tab
   themeForm!: ThemeConfig;
@@ -71,6 +71,7 @@ export class AdminDashboardComponent implements OnInit {
       name: this.restaurant.name,
       tagline: this.restaurant.tagline,
       logo: this.restaurant.logo,
+      discount: this.restaurant.discount ?? 0,
     };
   }
 
@@ -86,9 +87,11 @@ export class AdminDashboardComponent implements OnInit {
   // ─── Info tab ──────────────────────────────────────────────
   saveInfo(): void {
     if (!this.infoForm.name.trim()) return;
-    this.restaurant.name = this.infoForm.name.trim();
+    this.restaurant.name    = this.infoForm.name.trim();
     this.restaurant.tagline = this.infoForm.tagline.trim();
-    this.restaurant.logo = this.infoForm.logo.trim() || '🍽️';
+    this.restaurant.logo    = this.infoForm.logo.trim() || '🍽️';
+    const pct = Number(this.infoForm.discount);
+    this.restaurant.discount = (!isNaN(pct) && pct > 0 && pct <= 100) ? pct : 0;
     this.restaurantService.saveRestaurant(this.restaurant);
     this.showSaved('Restaurant info saved!');
   }

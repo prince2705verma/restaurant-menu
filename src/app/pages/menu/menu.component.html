@@ -34,6 +34,13 @@
     </div>
   </header>
 
+  <!-- Discount banner -->
+  @if (discount > 0) {
+    <div class="discount-banner">
+      🎉 <strong>{{ discount }}% OFF</strong> on all items today!
+    </div>
+  }
+
   <!-- Search & Filter -->
   <div class="search-bar sticky-bar">
     <div class="search-wrap">
@@ -109,13 +116,23 @@
               <div class="item-prices">
                 <div class="price-cell half-price">
                   @if (item.half) {
-                    <span class="rupee">₹</span><span class="amount">{{ item.half }}</span>
+                    @if (discount > 0) {
+                      <span class="price-original">₹{{ item.half }}</span>
+                      <span class="rupee">₹</span><span class="amount">{{ discounted(item.half) }}</span>
+                    } @else {
+                      <span class="rupee">₹</span><span class="amount">{{ item.half }}</span>
+                    }
                   } @else {
                     <span class="price-na">—</span>
                   }
                 </div>
                 <div class="price-cell full-price">
-                  <span class="rupee">₹</span><span class="amount">{{ item.full }}</span>
+                  @if (discount > 0) {
+                    <span class="price-original">₹{{ item.full }}</span>
+                    <span class="rupee">₹</span><span class="amount">{{ discounted(item.full) }}</span>
+                  } @else {
+                    <span class="rupee">₹</span><span class="amount">{{ item.full }}</span>
+                  }
                 </div>
               </div>
             </li>
